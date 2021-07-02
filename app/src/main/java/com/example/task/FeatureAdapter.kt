@@ -1,21 +1,24 @@
 package com.example.task
 
 import android.content.Intent
-import android.os.Parcel
-import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.RecyclerView
 import com.example.task.api.entities.Feature
 import com.example.task.ui.MapsActivity
 import kotlinx.android.synthetic.main.feature_list_layout.view.*
 
-class FeatureAdapter(
-    var featureList: List<Feature>
-) : RecyclerView.Adapter<FeatureAdapter.FeatureViewHolder>() {
+class FeatureAdapter : RecyclerView.Adapter<FeatureAdapter.FeatureViewHolder>() {
+
+    private var featureList: MutableList<Feature> = mutableListOf()
+
+    fun updateList(newFeatures: List<Feature>){
+        featureList.clear()
+        featureList.addAll(newFeatures)
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeatureViewHolder {
         val itemView = LayoutInflater.from(parent.context)

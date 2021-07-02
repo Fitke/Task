@@ -1,18 +1,23 @@
 package com.example.task.ui
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.task.api.Repository.FeatureListRepository
-import com.example.task.lazyDeferred
-import kotlinx.coroutines.GlobalScope
+import com.example.task.api.entities.Features
 import kotlinx.coroutines.launch
-import retrofit2.await
-import retrofit2.awaitResponse
 
 class FeatureListViewModel(
     private val featureListRepository: FeatureListRepository
 ): ViewModel() {
 
-    val getFeatureList by lazyDeferred {
-        featureListRepository.getFeatureList()
+    private val featuresMutableLiveData = MutableLiveData<Features>()
+    val features: LiveData<Features> = featuresMutableLiveData
+    init {
+        getAllFeatures()
+    }
+    private fun getAllFeatures() = viewModelScope.launch {
+        featuresMutableLiveData.value = featureListRepository.getFeatureList()
     }
 }

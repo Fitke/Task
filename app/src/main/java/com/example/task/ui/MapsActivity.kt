@@ -2,20 +2,14 @@ package com.example.task.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import com.example.task.R
-import com.example.task.api.entities.Feature
 import com.example.task.api.entities.Point
-
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.example.task.databinding.ActivityMapsBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.*
-import java.util.ArrayList
-
-const val BASE_URL = "https://releases-f89f5.firebaseio.com"
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -29,17 +23,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-
-        //Toast.makeText(this, featurePointsList?.size.toString(), Toast.LENGTH_SHORT).show()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        var featurePointsList = this.intent.extras?.getParcelableArrayList<Point>("points")!!
+        val featurePointsList = this.intent.extras?.getParcelableArrayList<Point>("points")!!
         for (point in featurePointsList){
             val newPoint = LatLng(point.latitude, point.longitude)
             latLngList.add(newPoint)

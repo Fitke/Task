@@ -2,10 +2,16 @@ package com.example.task.api.entities
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class Point(
+    @Json(name = "accuracy")
     val accuracy: Double,
+    @Json(name = "latitude")
     val latitude: Double,
+    @Json(name = "longitude")
     val longitude: Double
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
